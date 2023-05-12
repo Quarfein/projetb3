@@ -17,25 +17,18 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2 #previously v1
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1'
         with:
-          role-to-assume: arn:aws:iam::179187065278:role/github
-          aws-region: eu-west-3
-          #aws-access-key-id: {{ secrets.AWS_ACCESS_KEY_ID }}
-          #aws-secret-access-key: {{ secrets.AWS_SECRET_ACCESS_KEY }}
-
-      - name: Login to Amazon ECR Public
-        id: login-ecr-public
-        uses: aws-actions/amazon-ecr-login@v1
+          credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+      
+      - uses: RafikFarhad/push-to-gcr-github-action@v5-beta
         with:
-          registry-type: public
-  
-      - name: Build, tag, and push docker image to Amazon ECR Public
-        env:
-          REGISTRY: ${{ steps.login-ecr-public.outputs.registry }}
-          REPOSITORY: projetb3
-          IMAGE_TAG: ${{ matrix.folder }}
-        run: |
-          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG ./containers/${{ matrix.folder }}
-          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+          # gcloud_service_key: ${{ secrets.GCLOUD_SERVICE_KEY }} # can be base64 encoded or plain text || not needed if you use google-github-actions/auth
+          registry: eu.gcr.io
+          project_id: projetb3-386509
+          image_name: ${{ matrix.folder }}
+          image_tag: latest
+          dockerfile: ${{ matrix.folder }}/Dockerfile
+          context: ./containers
