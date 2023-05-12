@@ -27,7 +27,7 @@ jobs:
         with:
           # gcloud_service_key: ${{ secrets.GCLOUD_SERVICE_KEY }} # can be base64 encoded or plain text || not needed if you use google-github-actions/auth
           registry: eu.gcr.io
-          project_id: ${{ secrets.PROJECT_ID }}
+          project_id: projetb3-386509
           image_name: ${{ matrix.folder }}
           image_tag: latest
           dockerfile: ./containers/${{ matrix.folder }}/Dockerfile
@@ -35,6 +35,6 @@ jobs:
 
       - uses: 'google-github-actions/deploy-cloudrun@v1'
         with:
-            image: 'eu.gcr.io/${{ secrets.PROJECT_ID }}/${{ matrix.folder }}:latest'
+            image: 'eu.gcr.io/projetb3-386509/${{ matrix.folder }}:latest'
             service: '${{ matrix.folder }}'
             region: 'europe-west1'
