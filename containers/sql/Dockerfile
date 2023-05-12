@@ -1,3 +1,3 @@
 FROM mysql
 
-PORT 3306
+EXPOSE 3306
