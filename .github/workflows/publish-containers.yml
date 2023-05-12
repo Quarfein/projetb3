@@ -30,5 +30,5 @@ jobs:
           project_id: projetb3-386509
           image_name: ${{ matrix.folder }}
           image_tag: latest
-          dockerfile: ${{ matrix.folder }}/Dockerfile
-          context: ./containers
+          dockerfile: ./containers/${{ matrix.folder }}/Dockerfile
+          context: .
