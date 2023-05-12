@@ -5,7 +5,7 @@ run-name: ${{ github.actor }} builds and publishes containers
 on:
   push:
     branches:
-      - master
+      - main
 jobs:
   find-jobs:
     name: Find Jobs
