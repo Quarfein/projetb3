@@ -32,3 +32,8 @@ jobs:
           image_tag: latest
           dockerfile: ./containers/${{ matrix.folder }}/Dockerfile
           context: .
+
+      - uses: 'google-github-actions/deploy-cloudrun@v1'
+        with:
+            image: 'eu.gcr.io/${{ secrets.PROJECT_ID }}/${{ matrix.folder }}:latest'
+            service: '${{ matrix.folder }}'
