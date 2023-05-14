@@ -13,6 +13,7 @@ jobs:
     strategy:
       matrix:
         folder: [nginx, sql]
+        ports: [80, 3306]
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -33,8 +34,11 @@ jobs:
           dockerfile: ./containers/${{ matrix.folder }}/Dockerfile
           context: .
 
-      - uses: 'google-github-actions/deploy-cloudrun@v1'
+      - id: 'deploy'
+        uses: 'google-github-actions/deploy-cloudrun@v1'
         with:
             image: 'eu.gcr.io/${{ secrets.PROJECT_ID }}/${{ matrix.folder }}:latest'
             service: '${{ matrix.folder }}'
             region: 'europe-west1'
+            env_vars: |
+              PORT=${{ matrix.ports }}
