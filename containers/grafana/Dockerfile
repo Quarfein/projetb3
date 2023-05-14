@@ -1,0 +1,1 @@
+FROM grafa/grafana:latest
