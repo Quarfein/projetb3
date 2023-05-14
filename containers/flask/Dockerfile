@@ -1,5 +1,5 @@
 #Dockerfile for a flask app
-FROM python:3.7-alpine
+FROM python:3.8-alpine
 
 # Set the working directory to /app
 
@@ -13,10 +13,10 @@ COPY . /app
 
 RUN pip install flask
 
-# Make port 80 available to the world outside this container
+# Make port 5000 available to the world outside this container
 
-EXPOSE 80
+EXPOSE 5000
 
 # Run app.py when the container launches
 
-CMD ["python", "hello.py"]
+CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
