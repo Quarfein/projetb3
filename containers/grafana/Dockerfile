@@ -1,1 +1,1 @@
-FROM grafa/grafana:latest
+FROM grafana/grafana:latest
