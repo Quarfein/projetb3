@@ -12,12 +12,12 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        folder: [nginx, sql]
+        folder: [nginx, flask]
         include:
           - folder: nginx
             port: 80
-          - folder: sql
-            port: 3306
+          - folder: flask
+            port: 80
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
