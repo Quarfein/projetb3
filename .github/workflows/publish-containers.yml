@@ -17,7 +17,7 @@ jobs:
           - folder: nginx
             port: 80
           - folder: flask
-            port: 80
+            port: 5000
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
