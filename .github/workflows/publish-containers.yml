@@ -16,8 +16,6 @@ jobs:
         include:
           - folder: nginx
             port: 80
-          - folder: flask
-            port: 5000
           - folder: grafana
             port: 3000
     steps:
