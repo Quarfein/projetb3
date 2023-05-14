@@ -13,7 +13,11 @@ jobs:
     strategy:
       matrix:
         folder: [nginx, sql]
-        ports: [80, 3306]
+        include:
+          - folder: nginx
+            port: 80
+          - folder: sql
+            port: 3306
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -40,5 +44,4 @@ jobs:
             image: 'eu.gcr.io/${{ secrets.PROJECT_ID }}/${{ matrix.folder }}:latest'
             service: '${{ matrix.folder }}'
             region: 'europe-west1'
-            env_vars: |
-              PORT=${{ matrix.ports }}
+            flags: '--port=${{ matrix.port }}'
