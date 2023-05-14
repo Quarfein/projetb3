@@ -1,22 +1,13 @@
-#Dockerfile for a flask app
-FROM python:3.8-alpine
+FROM python:3.10-slim
 
-# Set the working directory to /app
+ENV PYTHONUNBUFFERED True
 
-WORKDIR /app
+ENV APP_HOME /app
 
-# Copy the current directory contents into the container at /app
+ENV PORT 5000
 
-COPY . /app
+WORKDIR $APP_HOME
 
-# Install any needed packages specified in requirements.txt
+COPY . ./
 
-RUN pip install flask
-
-# Make port 5000 available to the world outside this container
-
-EXPOSE 5000
-
-# Run app.py when the container launches
-
-ENTRYPOINT [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
+CMD exec gunicorn --bind :$PORT --workers 1 --threads 8 --timeout 0 main:app
